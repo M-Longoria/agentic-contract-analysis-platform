@@ -38,7 +38,7 @@ class ContractReviewWorkflow(Workflow):
         
         # Index the text chunks to Pinecone here for long-term audit lookup
         pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
-        index = pc.Index("contract-review-index")
+        index = pc.Index("vendor-contracts")
         # index.upsert(vectors=[...])
         
         return ComplianceReviewEvent(parsed_text=combined_text, vendor_data=ev.vendor_data)

@@ -1,6 +1,6 @@
 import os
 from llama_index.core.workflow import Workflow, StartEvent, StopEvent, step
-from llama_index.core.llms import OpenAI
+from llama_index.llms.openai import OpenAI
 from llama_parse import LlamaParse
 from pinecone import Pinecone
 from supabase import create_client

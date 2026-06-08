@@ -1,5 +1,6 @@
 llama-index-core==0.12.*
 llama-index-llms-openai==0.3.*
+llama-index-embeddings-openai==0.3.*
 llama-parse==0.5.*
 pinecone==6.0.*
 supabase==2.11.*

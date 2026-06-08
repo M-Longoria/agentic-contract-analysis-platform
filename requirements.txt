@@ -1,7 +1,7 @@
 llama-index-core==0.12.*
 llama-index-llms-openai==0.3.*
 llama-parse==0.5.*
-pinecone-client==5.4.*
+pinecone==6.0.*
 supabase==2.11.*
 python-dotenv==1.0.1
 fastapi==0.115.*

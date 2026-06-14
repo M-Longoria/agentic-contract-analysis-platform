@@ -1,5 +1,5 @@
 vendor_id,vendor_name,department,business_owner,document_type,document_url,contract_value,renewal_date,data_access_level,status
-VEN-001,Acme Payroll Systems,People Operations,Jordan Lee,Master Services Agreement,sample-docs/acme-payroll-msa.md,85000,2027-03-31,High,pending_review
-VEN-002,Northstar Analytics,Revenue Operations,Maya Chen,Data Processing Addendum,sample-docs/northstar-analytics-dpa.md,42000,2026-12-15,Medium,pending_review
-VEN-003,BrightDesk Support,Customer Success,Alex Rivera,Security Questionnaire,sample-docs/brightdesk-security-questionnaire.md,18000,2026-09-30,Medium,pending_review
-VEN-004,CloudLedger Finance,Finance,Priya Shah,SOC 2 Summary,sample-docs/cloudledger-soc2-summary.md,65000,2027-01-20,High,pending_review
+VEN-001,Acme Payroll Systems,People Operations,Jordan Lee,Master Services Agreement,sample-docs/acme-payroll-msa.pdf,85000,2027-03-31,High,pending_review
+VEN-002,Northstar Analytics,Revenue Operations,Maya Chen,Data Processing Addendum,sample-docs/northstar-analytics-dpa.pdf,42000,2026-12-15,Medium,pending_review
+VEN-003,BrightDesk Support,Customer Success,Alex Rivera,Security Questionnaire,sample-docs/brightdesk-security-questionnaire.pdf,18000,2026-09-30,Medium,pending_review
+VEN-004,CloudLedger Finance,Finance,Priya Shah,SOC 2 Summary,sample-docs/cloudledger-soc2-summary.pdf,65000,2027-01-20,High,pending_review

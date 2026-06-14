@@ -1,26 +1,19 @@
 import os
-import uuid  # Handles validation structural string updates
+import uuid
 import time
-from llama_index.core.workflow import Workflow, StartEvent, StopEvent, step, Event
+from llama_index.core.workflow import Workflow, StartEvent, StopEvent, step
 from llama_index.llms.openai import OpenAI
 from llama_parse import LlamaParse
 from pinecone import Pinecone
 from supabase import create_client
-
-class FileParsingEvent(Event):
-    def __init__(self, vendor_id: str, vendor_name: str, vendor_data: dict):
-        super().__init__()
-        self.vendor_id = vendor_id
-        self.vendor_name = vendor_name
-        self.vendor_data = vendor_data
-
-class ComplianceReviewEvent(Event):
-    def __init__(self, document_id: str, agent_run_id: str, parsed_text: str, vendor_data: dict):
-        super().__init__()
-        self.document_id = document_id
-        self.agent_run_id = agent_run_id
-        self.parsed_text = parsed_text
-        self.vendor_data = vendor_data
+from src.agents.events import (
+    FileParsingEvent,
+    ComplianceReviewEvent,
+    LegalReviewEvent,
+    SecurityReviewEvent,
+    SummaryEvent,
+    QAValidationEvent
+)
 
 class ContractReviewWorkflow(Workflow):
 
@@ -41,7 +34,8 @@ class ContractReviewWorkflow(Workflow):
         
         # 1. Run parsing job
         parser = LlamaParse(api_key=os.environ.get("LLAMAPARSE_API_KEY"), result_type="markdown")
-        parsed_docs = await parser.aparse_documents(["sample-docs/vendor_contract.pdf"])
+        document_path = ev.vendor_data.get("document_url", "")
+        parsed_docs = await parser.aload_data([document_path])
         combined_text = "\n\n".join([doc.text for doc in parsed_docs])
         parsing_duration = round(time.time() - start_time, 2)
 
@@ -50,19 +44,51 @@ class ContractReviewWorkflow(Workflow):
         pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
         index = pc.Index("vendor-contracts")
         
+        # 4. Chunk parsed text and embed into Pinecone
         # 3. Create unique tracking UUIDs for this extraction iteration pass
         document_uuid = str(uuid.uuid4())
         agent_run_uuid = str(uuid.uuid4())
         parsed_doc_uuid = str(uuid.uuid4())
+
+        from sentence_transformers import SentenceTransformer
+        embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+        chunk_size = 500
+        overlap = 100
+        words = combined_text.split()
+        chunks = []
+        i = 0
+        while i < len(words):
+            chunk = " ".join(words[i:i + chunk_size])
+            chunks.append(chunk)
+            i += chunk_size - overlap
+
+        vectors = []
+        for chunk_index, chunk in enumerate(chunks):
+            embedding = embedding_model.encode(chunk).tolist()
+            vectors.append({
+                "id": f"{document_uuid}-chunk-{chunk_index}",
+                "values": embedding,
+                "metadata": {
+                    "vendor_id": ev.vendor_id,
+                    "document_id": document_uuid,
+                    "document_type": "contract",
+                    "source_file": "vendor_contract.pdf",
+                    "chunk_index": chunk_index,
+                    "parsed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ")
+                }
+            })
+
+        index.upsert(vectors=vectors)
+        print(f"Indexed {len(vectors)} chunks into Pinecone.")
         
         # Log metadata directly to your 'documents' table schema 
         supabase.table("documents").insert({
             "id": document_uuid,
             "vendor_id": ev.vendor_id,
-            "file_name": "vendor_contract.pdf",
-            "storage_path": f"sample-docs/vendor_contract.pdf",
-            "file_type": "PDF"
-        }).execute()
+            "file_name": document_path.split("/")[-1],
+            "storage_path": document_path,
+            "file_type": document_path.split(".")[-1].upper()
+            }).execute()
         
         # Log results cleanly inside your 'parsed_documents' table schema
         supabase.table("parsed_documents").insert({
@@ -91,7 +117,8 @@ class ContractReviewWorkflow(Workflow):
     async def legal_and_security_agents(self, ev: ComplianceReviewEvent) -> StopEvent:
         """Step 3: Run AI analysis and record precise metrics inside review_findings columns."""
         print("Specialist agents conducting risk classifications...")
-        llm = OpenAI(model="gpt-4o-mini")
+        from llama_index.llms.groq import Groq
+        llm = Groq(model="llama-3.1-8b-instant", api_key=os.environ.get("GROQ_API_KEY"))
         
         prompt = f"""
         Analyze the following text for corporate contract risks.

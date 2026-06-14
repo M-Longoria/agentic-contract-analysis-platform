@@ -13,7 +13,7 @@ BrightDesk supports single sign-on using SAML 2.0. Multi-factor authentication i
 Role-based access controls are available. Customer administrators can assign agent, manager, and admin roles.
 
 ## Encryption
-Data is encrypted in transit using TLS. Data at rest is encrypted using cloud provider managed encryption.
+Data is encrypted in transit using TLS. Data at rest is encrypted using cloud provider-managed encryption.
 
 ## Logging and Monitoring
 BrightDesk maintains audit logs for administrative activity. Standard plans retain logs for 90 days.

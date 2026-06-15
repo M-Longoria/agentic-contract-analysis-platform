@@ -40,7 +40,7 @@ class ContractReviewWorkflow(Workflow):
         parsing_duration = round(time.time() - start_time, 2)
 
         # 2. Establish connections to your databases
-        supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
+        supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SECRET_KEY"))
         pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
         index = pc.Index("vendor-contracts")
         
@@ -134,7 +134,7 @@ class ContractReviewWorkflow(Workflow):
         response = await llm.acomplete(prompt)
         
         # Establish connection using administrative service role key
-        supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
+        supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SECRET_KEY"))
         finding_uuid = str(uuid.uuid4())
         
         # Write directly to your specific 'review_findings' table matching your exact database columns

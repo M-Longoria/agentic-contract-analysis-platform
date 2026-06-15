@@ -6,7 +6,7 @@ from llama_index.llms.openai import OpenAI
 from llama_parse import LlamaParse
 from pinecone import Pinecone
 from supabase import create_client
-from src.agents.events import (
+from .events import (
     FileParsingEvent,
     ComplianceReviewEvent,
     LegalReviewEvent,

@@ -10,18 +10,18 @@ async def poll_airbyte_staging_table():
     
     # 1. Properly reads your administrative service role environment variable
     supabase_url = os.environ.get("SUPABASE_URL")
-supabase_key = os.environ.get("SUPABASE_SECRET_KEY")
+    supabase_key = os.environ.get("SUPABASE_SECRET_KEY")
 
-print("SUPABASE_URL exists:", bool(supabase_url))
-print("SUPABASE_SECRET_KEY exists:", bool(supabase_key))
+    print("SUPABASE_URL exists:", bool(supabase_url))
+    print("SUPABASE_SECRET_KEY exists:", bool(supabase_key))
 
-if supabase_url:
-    print("URL prefix:", supabase_url[:25])
+    if supabase_url:
+        print("URL prefix:", supabase_url[:25])
 
-if supabase_key:
-    print("KEY prefix:", supabase_key[:15])
+    if supabase_key:
+        print("KEY prefix:", supabase_key[:15])
 
-supabase = create_client(supabase_url, supabase_key)
+    supabase = create_client(supabase_url, supabase_key)
     
     while True:
         try:

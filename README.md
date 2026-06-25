@@ -1,2 +1,278 @@
-# contract-review-agents
-A multi-agent workflow for parsing vendor contracts, extracting key terms, assessing risk, and generating structured review summaries using n8n, LlamaParse, Airbyte, Supabase, and the OpenAI Responses API.
+# Multi-Agent Contract Review System with Observability
+
+A production-style multi-agent contract review platform that parses vendor agreements, extracts contract content, performs legal and security risk analysis, stores vectorized contract data for retrieval, and monitors workflow health through an observability layer built with n8n, Supabase, and Metabase.
+
+---
+
+## Executive Dashboard
+
+![Metabase Dashboard](screenshots/metabase-dashboard.png)
+
+### Results
+
+* System Success Rate: 81%
+* SLA Compliance Rate: 71.43%
+* MTTR (Mean Time To Resolution): 55 minutes
+* DLQ Recovery Rate: 42.9%
+* Automated monitoring, alerting, retry workflows, and operational reporting
+
+---
+
+## Overview
+
+This project demonstrates an end-to-end AI workflow for vendor contract review and compliance assessment.
+
+The system:
+
+* Ingests vendor contracts
+* Parses documents into structured markdown
+* Chunks and embeds contract content
+* Stores vectors in Pinecone
+* Executes specialized review agents
+* Produces structured findings
+* Tracks operational health through monitoring, alerting, retries, and dashboard reporting
+
+### Key Capabilities
+
+* Multi-agent workflow orchestration
+* Contract parsing and document processing
+* Vector embeddings and retrieval
+* Legal and security risk assessment
+* Structured review findings
+* Workflow observability and monitoring
+* Automated alerting and retry mechanisms
+* SLA and MTTR reporting
+
+---
+
+## Architecture
+
+![Architecture Diagram](screenshots/architecture-diagram.png)
+
+### High-Level Flow
+
+```text
+Vendor Contract
+      ↓
+Airbyte
+      ↓
+LlamaParse
+      ↓
+Document Parser & Embedding Agent
+      ↓
+Chunking + Embeddings
+      ↓
+Pinecone Vector Database
+      ↓
+Legal & Security Review Agent
+      ↓
+Review Findings
+      ↓
+Supabase
+      ↓
+────────────────────────────
+Observability Layer
+────────────────────────────
+      ↓
+n8n Monitoring Workflows
+      ↓
+Failure Detection
+      ↓
+Email Alerts
+      ↓
+DLQ + Retry System
+      ↓
+Daily Health Reports
+      ↓
+Metabase Dashboard
+```
+
+---
+
+## Workflow Stages
+
+### 1. Contract Ingestion
+
+The workflow begins when a new vendor contract is submitted.
+
+Input data includes:
+
+* Vendor ID
+* Vendor Name
+* Contract URL
+
+Contract metadata is tracked throughout the review process.
+
+---
+
+### 2. Document Parsing & Embedding Agent
+
+This agent:
+
+* Parses contracts using LlamaParse
+* Converts source documents into markdown
+* Splits content into semantic chunks
+* Generates embeddings using Sentence Transformers
+* Stores vectors in Pinecone
+
+Metadata including vendor identifiers, document identifiers, and processing timestamps are attached to every vector.
+
+---
+
+### 3. Legal & Security Review Agent
+
+This agent analyzes contract content for:
+
+* Auto-renewal clauses
+* Liability limitations
+* Security controls
+* Encryption requirements
+* MFA requirements
+* Compliance risks
+
+Findings are stored in Supabase and linked to the originating document and workflow execution.
+
+---
+
+## n8n Workflow
+
+![n8n Workflow](screenshots/n8n-workflow.png)
+
+---
+
+## Data Layer
+
+### Supabase
+
+Stores:
+
+* Vendor records
+* Documents
+* Parsed documents
+* Agent runs
+* Review findings
+* Pipeline monitoring data
+* Alert history
+
+### Pinecone
+
+Stores vector embeddings used for semantic retrieval and future RAG workflows.
+
+---
+
+## Observability & Monitoring
+
+A dedicated observability layer monitors workflow reliability and operational health.
+
+### Monitoring Features
+
+* Automated pipeline monitoring
+* Failure detection
+* Email alerting
+* Dead Letter Queue (DLQ)
+* Automated retry workflows
+* Alert history tracking
+* Daily health reporting
+* Executive dashboarding
+
+### Operational Metrics
+
+Current monitoring includes:
+
+* System Success Rate
+* SLA Compliance Rate
+* Mean Time To Resolution (MTTR)
+* DLQ Recovery Rate
+* Unresolved DLQ Tracking
+* Failure Trends
+* Alert History
+* Retry History
+
+---
+
+## Technology Stack
+
+### AI & Agent Frameworks
+
+* LlamaIndex Workflows
+* LlamaParse
+* Groq (Llama 3.1)
+* Sentence Transformers
+
+### Data & Retrieval
+
+* Supabase (PostgreSQL)
+* Pinecone
+
+### Workflow Automation
+
+* Airbyte
+* n8n
+
+### Monitoring & Analytics
+
+* Metabase
+
+### Infrastructure
+
+* Docker
+* WSL2
+
+---
+
+## Key Concepts Demonstrated
+
+### Multi-Agent Architecture
+
+Independent agents perform specialized tasks and pass structured events between workflow stages.
+
+### Retrieval-Augmented Generation (RAG)
+
+Contracts are parsed, chunked, embedded, and stored for retrieval and downstream analysis.
+
+### Observability Engineering
+
+Workflow executions are monitored through logging, alerting, retry mechanisms, SLA tracking, and dashboard reporting.
+
+### Production-Oriented Design
+
+The system includes operational safeguards commonly found in production environments:
+
+* Alerting
+* Retry workflows
+* Dead Letter Queues
+* Health reporting
+* Incident tracking
+* Reliability metrics
+
+---
+
+## Skills Demonstrated
+
+* AI Agent Development
+* Workflow Automation
+* Retrieval-Augmented Generation (RAG)
+* Vector Databases
+* Contract Risk Analysis
+* Prompt Engineering
+* Data Modeling
+* Observability Engineering
+* Incident Monitoring
+* SQL
+* Docker
+* API Integrations
+* Low-Code / No-Code Orchestration
+* Production Workflow Design
+
+---
+
+## Future Enhancements
+
+* Additional specialist review agents
+* Contract clause extraction
+* Vendor risk scoring
+* Approval workflows
+* Human-in-the-loop review
+* Contract comparison workflows
+* Automated remediation recommendations
+* Semantic contract search

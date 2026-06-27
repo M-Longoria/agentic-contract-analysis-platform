@@ -25,6 +25,7 @@ This project demonstrates an end-to-end AI workflow for vendor contract review a
 The system:
 
 * Ingests vendor contracts
+* Early-stage deduplication to reduce compute and API costs
 * Parses documents into structured markdown
 * Chunks and embeds contract content
 * Stores vectors in Pinecone
@@ -34,7 +35,8 @@ The system:
 
 ### Key Capabilities
 
-* Multi-agent workflow orchestration
+* Multi-agent workflow orchestration with event-driven pipeline design
+* Early file-hash deduplication (pre-parse cost optimization)
 * Contract parsing and document processing
 * Vector embeddings and retrieval
 * Legal and security risk assessment
@@ -101,21 +103,23 @@ Input data includes:
 * Vendor Name
 * Contract URL
 
-Contract metadata is tracked throughout the review process.
+Contract metadata is tracked and persisted across all workflow stages.
 
 ---
 
 ### 2. Document Parsing & Embedding Agent
 
-This agent:
+This agent processes contracts into embeddings with early-stage deduplication to avoid redundant computation.
 
-* Parses contracts using LlamaParse
-* Converts source documents into markdown
+* Checks for existing documents in Supabase using a content hash
+* Skips processing if a duplicate is found (prevents unnecessary parsing and embedding)
+* Parses contracts using LlamaParse (for new documents only)
+* Converts documents into structured markdown
 * Splits content into semantic chunks
 * Generates embeddings using Sentence Transformers
 * Stores vectors in Pinecone
 
-Metadata including vendor identifiers, document identifiers, and processing timestamps are attached to every vector.
+Each vector includes metadata such as vendor ID, document ID, and chunk index to support traceability and downstream retrieval.
 
 ---
 
@@ -226,6 +230,15 @@ Current monitoring includes:
 
 Independent agents perform specialized tasks and pass structured events between workflow stages.
 
+### Cost-Aware Ingestion Design
+
+The system minimizes expensive API usage by introducing early-stage deduplication:
+
+- Prevents unnecessary LlamaParse calls
+- Reduces compute + embedding cost
+- Eliminates redundant vector storage
+- Improves pipeline latency
+
 ### Retrieval-Augmented Generation (RAG)
 
 Contracts are parsed, chunked, embedded, and stored for retrieval and downstream analysis.
@@ -238,6 +251,7 @@ Workflow executions are monitored through logging, alerting, retry mechanisms, S
 
 The system includes operational safeguards commonly found in production environments:
 
+* Early-stage deduplication
 * Alerting
 * Retry workflows
 * Dead Letter Queues

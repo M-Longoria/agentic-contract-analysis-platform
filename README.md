@@ -20,7 +20,7 @@ The result is a more cost-efficient, scalable, and production-aware AI workflow 
 
 ![Metabase Dashboard](screenshots/metabase-dashboard.png)
 
-*End-to-end system architecture showing ingestion, parsing, embedding, agent execution, and observability workflow.*
+*Metabase dashboard showing system reliability metrics, SLA performance, and operational outcomes across the contract review pipeline.*
 
 ### Results
 

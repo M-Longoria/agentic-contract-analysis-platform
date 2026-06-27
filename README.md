@@ -8,6 +8,8 @@ A production-style multi-agent contract review platform that parses vendor agree
 
 ![Metabase Dashboard](screenshots/metabase-dashboard.png)
 
+*End-to-end system architecture showing ingestion, parsing, embedding, agent execution, and observability workflow.*
+
 ### Results
 
 * System Success Rate: 81%
@@ -50,6 +52,8 @@ The system:
 ## Architecture
 
 ![Architecture Diagram](screenshots/architecture-diagram.png)
+
+*End-to-end system architecture showing ingestion, parsing, embedding, agent execution, and observability workflow across Supabase, Pinecone, and n8n.*
 
 ### High-Level Flow
 
@@ -141,6 +145,8 @@ Findings are stored in Supabase and linked to the originating document and workf
 ## n8n Workflow
 
 ![n8n Workflow](screenshots/n8n-workflow.png)
+
+*Automated monitoring and alerting workflow responsible for failure detection, retries, DLQ handling, and daily system health reporting.*
 
 ---
 

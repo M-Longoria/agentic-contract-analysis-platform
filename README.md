@@ -1,6 +1,10 @@
 # Agentic Contract Analysis Platform with Observability
 
-A production-style multi-agent contract review platform that parses vendor agreements, extracts contract content, performs legal and security risk analysis, stores vectorized contract data for retrieval, and monitors workflow health through an observability layer built with n8n, Supabase, and Metabase.
+A production-style multi-agent system for automated contract review and risk analysis.
+
+The platform ingests vendor agreements, performs early-stage deduplication to reduce cost and latency, parses documents into structured formats using LlamaParse, generates embeddings for retrieval with Pinecone, and runs specialized legal and security review agents.
+
+An observability layer built with Supabase, n8n, and Metabase tracks workflow reliability, failure recovery, and operational performance in real time.
 
 ---
 

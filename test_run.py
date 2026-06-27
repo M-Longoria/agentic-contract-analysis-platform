@@ -8,14 +8,14 @@ from llama_index.core.workflow import StartEvent
 async def main():
     workflow = ContractReviewWorkflow(timeout=120, verbose=True)
     result = await workflow.run(
-        vendor_id="VEN-001",
-        vendor_name="Acme Payroll Systems",
+        vendor_id="VEN-004",
+        vendor_name="NorthStar Analytics",
         vendor_data={
-            "department": "People Operations",
-            "contract_value": 85000,
-            "data_access_level": "High",
-            "document_url": "sample-docs/acme-payroll-msa.pdf",
-            "document_type": "Master Services Agreement"
+            "department": "Data Processing",
+            "contract_value": 30000,
+            "data_access_level": "Medium",
+            "document_url": "sample-docs/northstar-analytics-dpa.pdf",
+            "document_type": "Data Processing Agreement"
         }
     )
     print("RESULT:", result)

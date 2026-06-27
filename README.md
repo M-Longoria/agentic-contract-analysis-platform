@@ -1,4 +1,4 @@
-# Multi-Agent Contract Review System with Observability
+# Agentic Contract Analysis Platform with Observability
 
 A production-style multi-agent contract review platform that parses vendor agreements, extracts contract content, performs legal and security risk analysis, stores vectorized contract data for retrieval, and monitors workflow health through an observability layer built with n8n, Supabase, and Metabase.
 

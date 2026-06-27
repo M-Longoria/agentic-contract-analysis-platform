@@ -144,7 +144,7 @@ Findings are stored in Supabase and linked to the originating document and workf
 
 ## n8n Workflow
 
-![n8n Workflow](screenshots/n8n-workflow.png)
+![n8n Workflow](screenshots/monitoring-workflow.png)
 
 *Automated monitoring and alerting workflow responsible for failure detection, retries, DLQ handling, and daily system health reporting.*
 

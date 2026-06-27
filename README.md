@@ -6,6 +6,14 @@ The platform ingests vendor agreements, performs early-stage deduplication to re
 
 An observability layer built with Supabase, n8n, and Metabase tracks workflow reliability, failure recovery, and operational performance in real time.
 
+## Why This Matters
+
+Most contract review workflows in real organizations are slow, expensive, and heavily manual. Large documents are repeatedly processed, parsed, and analyzed even when they haven’t changed, leading to wasted compute and unnecessary API costs.
+
+This system addresses those inefficiencies by introducing early-stage deduplication, ensuring documents are only parsed and embedded when they are truly new or modified. It also adds structured observability, making system behavior measurable rather than opaque.
+
+The result is a more cost-efficient, scalable, and production-aware AI workflow for document intelligence.
+
 ---
 
 ## Executive Dashboard

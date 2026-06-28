@@ -1,6 +1,6 @@
 # Agentic Contract Analysis Platform with Observability
 
-A production-style multi-agent system for automated contract review and risk analysis.
+A production-oriented multi-agent system for automated contract review and risk analysis.
 
 The platform ingests vendor agreements, performs early-stage deduplication to reduce cost and latency, parses documents into structured formats using LlamaParse, generates embeddings for retrieval with Pinecone, and runs specialized legal and security review agents.
 
@@ -10,9 +10,13 @@ An observability layer built with Supabase, n8n, and Metabase tracks workflow re
 
 Most contract review workflows in real organizations are slow, expensive, and heavily manual. Large documents are repeatedly processed, parsed, and analyzed even when they haven’t changed, leading to wasted compute and unnecessary API costs.
 
-This system addresses those inefficiencies by introducing early-stage deduplication, ensuring documents are only parsed and embedded when they are truly new or modified. It also adds structured observability, making system behavior measurable rather than opaque.
+This system addresses those inefficiencies by introducing early-stage deduplication, ensuring documents are only parsed and embedded when they are truly new or modified. It also adds structured observability, making system behavior measurable.
 
 The result is a more cost-efficient, scalable, and production-aware AI workflow for document intelligence.
+
+## My Role
+
+Designed and built this project end-to-end, including architecture, data modeling, document ingestion, RAG pipeline implementation, multi-agent workflow orchestration, observability, monitoring, and deployment of supporting infrastructure.
 
 ---
 
@@ -125,7 +129,7 @@ Contract metadata is tracked and persisted across all workflow stages.
 
 ### 2. Document Parsing & Embedding Agent
 
-This agent processes contracts into embeddings with early-stage deduplication to avoid redundant computation.
+These agents process contracts into embeddings with early-stage deduplication to avoid redundant computation.
 
 * Checks for existing documents in Supabase using a content hash
 * Skips processing if a duplicate is found (prevents unnecessary parsing and embedding)
@@ -141,7 +145,7 @@ Each vector includes metadata such as vendor ID, document ID, and chunk index to
 
 ### 3. Legal & Security Review Agent
 
-This agent analyzes contract content for:
+These agents analyze contract content for:
 
 * Auto-renewal clauses
 * Liability limitations

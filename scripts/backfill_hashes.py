@@ -1,3 +1,9 @@
+"""
+One-time utility used to backfill document hashes for existing records
+after introducing hash-based deduplication.
+Not required for normal application execution.
+"""
+
 import os
 import hashlib
 import psycopg
